@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6299899493706942008}
   - component: {fileID: 6299899493692084894}
+  - component: {fileID: 7418681016490154093}
   m_Layer: 0
   m_Name: Prefab_RockFormation_01
   m_TagString: Untagged
@@ -61,6 +62,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 6299899493709366490}
   m_Enabled: 1
+--- !u!65 &7418681016490154093
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6299899493707373080}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5.0849304, y: 5.274194, z: 4.946419}
+  m_Center: {x: -0.33542633, y: 2.137097, z: 0.11099625}
 --- !u!1 &6299899493707373082
 GameObject:
   m_ObjectHideFlags: 0
@@ -72,7 +86,6 @@ GameObject:
   - component: {fileID: 6299899493706942010}
   - component: {fileID: 6299899493708236314}
   - component: {fileID: 6299899493709366490}
-  - component: {fileID: 6299899493713671354}
   m_Layer: 0
   m_Name: Cliff01_LOD2
   m_TagString: Untagged
@@ -116,6 +129,8 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -140,20 +155,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &6299899493713671354
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6299899493707373082}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4300004, guid: db7394ca680dcd54d93ad50a2708b9de, type: 3}
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &6299899493707373084
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,7 +167,6 @@ GameObject:
   - component: {fileID: 6299899493706942012}
   - component: {fileID: 6299899493708236316}
   - component: {fileID: 6299899493709366492}
-  - component: {fileID: 6299899493713671356}
   m_Layer: 0
   m_Name: Cliff01_LOD1
   m_TagString: Untagged
@@ -209,6 +210,8 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -233,20 +236,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &6299899493713671356
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6299899493707373084}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4300004, guid: db7394ca680dcd54d93ad50a2708b9de, type: 3}
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &6299899493707373086
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,7 +248,6 @@ GameObject:
   - component: {fileID: 6299899493706942014}
   - component: {fileID: 6299899493708236318}
   - component: {fileID: 6299899493709366494}
-  - component: {fileID: 6299899493713671358}
   m_Layer: 0
   m_Name: Cliff01_LOD0
   m_TagString: Untagged
@@ -302,6 +291,8 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -326,17 +317,4 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &6299899493713671358
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6299899493707373086}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4300004, guid: db7394ca680dcd54d93ad50a2708b9de, type: 3}
+  m_AdditionalVertexStreams: {fileID: 0}
