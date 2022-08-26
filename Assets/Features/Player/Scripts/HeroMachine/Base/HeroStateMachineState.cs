@@ -1,25 +1,48 @@
 using Features.Animatons;
 using Features.Services.InputSystem;
 using Features.StateMachine;
+using UnityEngine;
 
 namespace Features.Player.Scripts.HeroMachine.Base
 {
   public class HeroStateMachineState : BaseStateMachineState
   {
-    protected readonly HeroStateMachineObserver hero;
-    protected readonly SimpleAnimator animator;
+    private readonly HeroStateMachineObserver hero;
+    private readonly SimpleAnimator animator;
+
+    private readonly int parameterName;
     
-    public HeroStateMachineState(HeroStateMachineObserver hero, SimpleAnimator animator)
+    public HeroStateMachineState(HeroStateMachineObserver hero, SimpleAnimator animator, string animationParameterName)
     {
       this.hero = hero;
       this.animator = animator;
+
+      parameterName = Animator.StringToHash(animationParameterName);
     }
-    
+
+    public override void Enter()
+    {
+      base.Enter();
+      animator.SetBool(parameterName, true);
+    }
+
+    public override void Exit()
+    {
+      base.Exit();
+      animator.SetBool(parameterName, false);
+    }
+
     public virtual void Update(IInputCommand[] commands, int commandsCount, float deltaTime) {}
 
     protected void ChangeState<TState>() where TState : HeroStateMachineState => 
       hero.ChangeState<TState>();
-      
+    
+    protected void ChangeState<TState>(TState state) where TState : HeroStateMachineState => 
+      hero.ChangeState<TState>(state);
+
+    protected TState GetState<TState>() where TState : HeroStateMachineState => 
+      hero.GetState<TState>();
+
     protected void ApplyCommand(IInputCommand command, float deltaTime)
     {
       
@@ -32,7 +55,7 @@ namespace Features.Player.Scripts.HeroMachine.Base
           ApplySpecialCommand((InputCommandBool) command, deltaTime);
           break;
         case InputCommandType.CameraRotate:
-          ApplyCameraRotateCommand((InputCommandAxis) command, deltaTime);
+          ApplyCameraRotateCommand((InputCommandVector) command, deltaTime);
           break;
       }
     }
@@ -41,7 +64,7 @@ namespace Features.Player.Scripts.HeroMachine.Base
 
     protected virtual void ApplySpecialCommand(InputCommandBool command, float deltaTime) { }
 
-    protected virtual void ApplyCameraRotateCommand(InputCommandAxis command, float deltaTime) { }
+    protected virtual void ApplyCameraRotateCommand(InputCommandVector command, float deltaTime) { }
 
     protected void SetBool(int hashName, bool isEnable) => 
       animator.SetBool(hashName, isEnable);

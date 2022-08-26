@@ -10,10 +10,16 @@ namespace Features.Player.Scripts.HeroMachine.States
     private readonly HeroMove move;
     private readonly CameraRotator cameraRotator;
 
-    public HeroDashState(HeroStateMachineObserver hero, HeroMove move, CameraRotator cameraRotator, SimpleAnimator animator) : base(hero, animator)
+    public HeroDashState(HeroStateMachineObserver hero, HeroMove move, CameraRotator cameraRotator, SimpleAnimator animator, string parameterName) : 
+      base(hero, animator, parameterName)
     {
       this.move = move;
       this.cameraRotator = cameraRotator;
+    }
+
+    public bool IsCanDash()
+    {
+      return true;
     }
   }
 }

@@ -27,8 +27,8 @@ namespace Features.Player.Scripts.HeroMachine.Base
     public void CreateStates()
     {
       CreateIdleState();
-      CreateRunState();
-      CreateWalkState();
+      CreateMoveState();
+      CreateDashState();
     }
 
     public TState GetState<TState>() where TState : BaseStateMachineState
@@ -41,19 +41,19 @@ namespace Features.Player.Scripts.HeroMachine.Base
 
     private void CreateIdleState()
     {
-      HeroIdleState state = new HeroIdleState(hero, cameraRotator, animator);
+      HeroIdleState state = new HeroIdleState(hero, cameraRotator, animator, "IsIdle");
       SaveState(state);
     }
 
-    private void CreateRunState()
+    private void CreateMoveState()
     {
-      HeroMoveState state = new HeroMoveState(hero,move, cameraRotator, animator);
+      HeroMoveState state = new HeroMoveState(hero,move, cameraRotator, animator, "IsMove");
       SaveState(state);
     }
 
-    private void CreateWalkState()
+    private void CreateDashState()
     {
-      HeroDashState state = new HeroDashState(hero,move, cameraRotator, animator);
+      HeroDashState state = new HeroDashState(hero,move, cameraRotator, animator, "IsDash");
       SaveState(state);
     }
 

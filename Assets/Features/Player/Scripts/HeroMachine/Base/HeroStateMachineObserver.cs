@@ -29,13 +29,19 @@ namespace Features.Player.Scripts.HeroMachine.Base
       statesContainer.CreateStates();
 
     public void SetDefaultState() => 
-      stateMachine.SetState(statesContainer.GetState<HeroIdleState>());
+      stateMachine.SetState(GetState<HeroIdleState>());
 
     public void UpdateState(IInputCommand[] commands, int commandsCount, float deltaTime) => 
       stateMachine.UpdateState(commands, commandsCount, deltaTime);
 
     public void ChangeState<TState>() where TState : HeroStateMachineState => 
-      stateMachine.ChangeState(statesContainer.GetState<TState>());
+      stateMachine.ChangeState(GetState<TState>());
+    
+    public void ChangeState<TState>(TState state) where TState : HeroStateMachineState => 
+      stateMachine.ChangeState(state);
+
+    public TState GetState<TState>() where TState : HeroStateMachineState => 
+      statesContainer.GetState<TState>();
 
     private void OnAnimationTriggered() => 
       stateMachine.State.TriggerAnimation();

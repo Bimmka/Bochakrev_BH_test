@@ -12,6 +12,11 @@ namespace Features.Player.Scripts.HeroCamera
     {
       this.camera = camera;
       this.cameraRotateData = cameraRotateData;
-    }    
+    }
+
+    public void Rotate(Vector2 moveVector)
+    {
+      
+    }
   }
 }

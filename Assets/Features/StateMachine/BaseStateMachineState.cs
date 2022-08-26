@@ -1,9 +1,7 @@
 namespace Features.StateMachine
 {
-  public class BaseStateMachineState
+  public abstract class BaseStateMachineState
   {
-    protected int animationName;
-
     public virtual void Enter() => 
       Check();
 

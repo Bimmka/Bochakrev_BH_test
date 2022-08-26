@@ -1,11 +1,9 @@
-using System;
 using Features.Animatons;
 using Features.Player.Scripts.HeroCamera;
 using Features.Player.Scripts.HeroInput;
 using Features.Player.Scripts.HeroMachine.Base;
 using Features.Player.Scripts.Move;
 using Features.Player.Scripts.Rotate;
-using Features.StaticData.Hero;
 using Features.StaticData.Hero.CameraRotate;
 using Features.StaticData.Hero.Move;
 using Features.StaticData.Hero.Rotate;
@@ -14,6 +12,9 @@ using UnityEngine;
 
 namespace Features.Player.Scripts.Base
 {
+    [RequireComponent(typeof(HeroStateMachineObserver))]
+    [RequireComponent(typeof(HeroInputObserver))]
+    [RequireComponent(typeof(CharacterController))]
     public class Hero : NetworkBehaviour
     {
         [SerializeField] private HeroInputObserver input;
