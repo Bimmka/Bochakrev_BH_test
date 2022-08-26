@@ -1,6 +1,4 @@
-﻿using Services;
-
-namespace Features.Services.InputSystem
+﻿namespace Features.Services.InputSystem
 {
   public interface IInputService : ICleanupService
   {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Features.Animatons;
-using Features.Player.Scripts.Camera;
+using Features.Player.Scripts.HeroCamera;
 using Features.Player.Scripts.HeroMachine.States;
 using Features.Player.Scripts.Move;
 using Features.StateMachine;

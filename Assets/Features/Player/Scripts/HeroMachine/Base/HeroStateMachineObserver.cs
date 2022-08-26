@@ -1,5 +1,4 @@
 using Features.Animatons;
-using Features.Player.Scripts.Camera;
 using Features.Player.Scripts.HeroMachine.States;
 using Features.Player.Scripts.Move;
 using Features.Services.InputSystem;
@@ -14,10 +13,10 @@ namespace Features.Player.Scripts.HeroMachine.Base
     private HeroStateMachine stateMachine;
     private HeroStatesContainer statesContainer;
     
-    public void Construct( )
+    public void Construct(HeroStatesContainer container)
     {
       stateMachine = new HeroStateMachine();
-      statesContainer = new HeroStatesContainer(this, new HeroMove(), new CameraRotator(), animator);
+      statesContainer = container;
     }
 
     public void Subscribe() => 

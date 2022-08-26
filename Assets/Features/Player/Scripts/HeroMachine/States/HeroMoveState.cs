@@ -1,5 +1,5 @@
 using Features.Animatons;
-using Features.Player.Scripts.Camera;
+using Features.Player.Scripts.HeroCamera;
 using Features.Player.Scripts.HeroMachine.Base;
 using Features.Player.Scripts.Move;
 

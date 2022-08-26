@@ -1,4 +1,4 @@
-﻿namespace Services
+﻿namespace Features.Services
 {
   public interface IService
   {
