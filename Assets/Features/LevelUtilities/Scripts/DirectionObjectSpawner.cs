@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Features.LevelUtilities.Scripts
 {
-  public class ObjectSpawner : MonoBehaviour
+  public class DirectionObjectSpawner : MonoBehaviour
   {
     [SerializeField] private Transform startPosition;
     [SerializeField] private Transform spawnParent;
@@ -11,10 +11,5 @@ namespace Features.LevelUtilities.Scripts
     [SerializeField] private Vector3 rotation;
     [SerializeField] private int count;
     [SerializeField] private float offset;
-
-    public void Spawn()
-    {
-      
-    }
   }
 }

@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace Features.LevelUtilities.Editor
 {
-  [CustomEditor(typeof(ObjectSpawner))]
-  public class ObjectSpawnerEditor : UnityEditor.Editor
+  [CustomEditor(typeof(DirectionObjectSpawner))]
+  public class DirectionObjectSpawnerEditor : UnityEditor.Editor
   {
-    private ObjectSpawner myTarget;
+    private DirectionObjectSpawner myTarget;
 
     private Transform spawnPosition;
     private Transform spawnParent;
@@ -19,7 +19,7 @@ namespace Features.LevelUtilities.Editor
     
     public override void OnInspectorGUI()
     {
-      myTarget = (ObjectSpawner) target;
+      myTarget = (DirectionObjectSpawner) target;
       
       spawnPosition = (Transform) serializedObject.FindProperty("startPosition").objectReferenceValue;
       spawnParent = (Transform) serializedObject.FindProperty("spawnParent").objectReferenceValue;
