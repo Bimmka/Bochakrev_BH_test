@@ -33730,6 +33730,10 @@ PrefabInstance:
       propertyPath: offlineScene
       value: Assets/Scenes/MainMenuScene.unity
       objectReference: {fileID: 0}
+    - target: {fileID: 6004176351970387270, guid: 25458c2a946cf0440a1f435f05e1c0f9, type: 3}
+      propertyPath: autoCreatePlayer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6004176351970387271, guid: 25458c2a946cf0440a1f435f05e1c0f9, type: 3}
       propertyPath: m_RootOrder
       value: 3
