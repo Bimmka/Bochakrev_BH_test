@@ -7,5 +7,7 @@ namespace Features.StaticData.Hero.Dash
   {
     public float MaxDuration = 3f;
     public float DashStepValue = 0.5f;
+
+    public HeroDashHitData HitData;
   }
 }

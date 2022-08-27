@@ -12,5 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d69faefc0ab74e76b57b4cb6394ae7c4, type: 3}
   m_Name: HeroDashStaticData
   m_EditorClassIdentifier: 
-  MaxDuration: 1
-  DashStepValue: 20
+  MaxDuration: 0.15
+  DashStepValue: 40
+  HitData:
+    HitLayer:
+      serializedVersion: 2
+      m_Bits: 384
+    MaxHitCount: 5

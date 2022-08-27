@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4f0a1d5736f41b58186a7f0d3eb5254, type: 3}
   m_Name: HeroCameraRotateStaticData
   m_EditorClassIdentifier: 
-  HorizontalSensitive: 1000
+  HorizontalSensitive: 500
   VerticalSensitive: 500
   StartAnglesValue: {x: 35, y: 0}
   DistanceFromTarget: 6
-  SmoothTime: 0.1
+  SmoothTime: 0.5

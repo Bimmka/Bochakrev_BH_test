@@ -7,7 +7,7 @@ namespace Features.Player.Scripts.HeroMachine.Base
 {
   public class HeroStateMachineState : BaseStateMachineState
   {
-    private readonly HeroStateMachineObserver hero;
+    protected readonly HeroStateMachineObserver hero;
     private readonly SimpleAnimator animator;
 
     private readonly int parameterName;

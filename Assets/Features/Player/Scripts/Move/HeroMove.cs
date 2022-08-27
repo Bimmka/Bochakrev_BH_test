@@ -24,23 +24,17 @@ namespace Features.Player.Scripts.Move
 
     public void Move(Vector2 direction, float deltaTime)
     {
-      Vector3 moveDirection = MoveDirection(direction);
+      Vector3 moveDirection = InputMoveDirection(direction);
       if (heroTransform.forward.IsEqualMoveDirection(moveDirection) == false)
         rotate.WalkRotate(moveDirection);
 
       heroController.Move(moveDirection * (moveData.WalkSpeed * deltaTime));
     }
     
-    public void Dash(Vector2 direction, float deltaTime, float step)
-    {
-      Vector3 moveDirection = MoveDirection(direction);
-      if (heroTransform.forward.IsEqualMoveDirection(moveDirection) == false)
-        rotate.DashRotate(moveDirection);
+    public void Dash(Vector3 direction, float deltaTime, float step) => 
+      heroController.Move(direction * (step * deltaTime));
 
-      heroController.Move(moveDirection * (step * deltaTime));
-    }
-
-    private Vector3 MoveDirection(Vector2 inputDirection)
+    private Vector3 InputMoveDirection(Vector2 inputDirection)
     {
       Vector3 worldMoveVector = Vector3.zero;
       if (inputDirection.x != 0)

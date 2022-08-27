@@ -6,6 +6,7 @@ using Features.Player.Scripts.HeroMachine.States;
 using Features.Player.Scripts.Move;
 using Features.StateMachine;
 using Features.StaticData.Hero.Dash;
+using UnityEngine;
 
 namespace Features.Player.Scripts.HeroMachine.Base
 {
@@ -16,15 +17,17 @@ namespace Features.Player.Scripts.HeroMachine.Base
     private readonly HeroCameraObserver heroCamera;
     private readonly SimpleAnimator animator;
     private readonly HeroDashStaticData dashStaticData;
+    private readonly CharacterController characterController;
     private readonly Dictionary<Type, BaseStateMachineState> states;
     public HeroStatesContainer(HeroStateMachineObserver hero, HeroMove move, HeroCameraObserver heroCamera, SimpleAnimator animator,
-      HeroDashStaticData dashStaticData)
+      HeroDashStaticData dashStaticData, CharacterController characterController)
     {
       this.hero = hero;
       this.move = move;
       this.heroCamera = heroCamera;
       this.animator = animator;
       this.dashStaticData = dashStaticData;
+      this.characterController = characterController;
       states = new Dictionary<Type, BaseStateMachineState>(5);
     }
 
@@ -57,7 +60,8 @@ namespace Features.Player.Scripts.HeroMachine.Base
 
     private void CreateDashState()
     {
-      HeroDashState state = new HeroDashState(hero,move, heroCamera, animator, "IsDash", dashStaticData);
+      HeroDashState state = new HeroDashState(hero,move, heroCamera, animator, "IsDash", dashStaticData, 
+        characterController.height, characterController.radius);
       SaveState(state);
     }
 

@@ -4,14 +4,11 @@ using Features.Player.Scripts.HeroMachine.Base;
 using Features.Player.Scripts.Move;
 using Features.Services.InputSystem;
 using Features.StaticData.Hero.Dash;
-using UnityEngine;
 
 namespace Features.Player.Scripts.HeroMachine.States
 {
   public class HeroDashState : HeroStateMachineState
   {
-    private static readonly Vector2 dashDirection = Vector2.up;
-    
     private readonly HeroMove move;
     private readonly HeroCameraObserver cameraRotator;
     private readonly HeroDashStaticData dashData;
@@ -19,12 +16,17 @@ namespace Features.Player.Scripts.HeroMachine.States
     private float dashDuration;
     private bool isDashing;
 
-    public HeroDashState(HeroStateMachineObserver hero, HeroMove move, HeroCameraObserver cameraRotator, SimpleAnimator animator, string parameterName, HeroDashStaticData dashData) : 
+    private HeroDashHitter dashHitter;
+
+    public HeroDashState(HeroStateMachineObserver hero, HeroMove move, HeroCameraObserver cameraRotator, SimpleAnimator animator, string parameterName, 
+      HeroDashStaticData dashData, float colliderHeight, float colliderRadius) : 
       base(hero, animator, parameterName)
     {
       this.move = move;
       this.cameraRotator = cameraRotator;
       this.dashData = dashData;
+      
+      dashHitter = new HeroDashHitter(dashData.HitData, hero.transform, colliderHeight, colliderRadius);
     }
 
     public override void Enter()
@@ -36,6 +38,9 @@ namespace Features.Player.Scripts.HeroMachine.States
 
     public override void Update(IInputCommand[] commands, int commandsCount, float deltaTime)
     {
+      if (IsHit())
+        Attack();
+      
       Move(deltaTime);
       UpdateDashDuration(deltaTime);
       base.Update(commands, commandsCount, deltaTime);
@@ -86,12 +91,18 @@ namespace Features.Player.Scripts.HeroMachine.States
       dashDuration = 0;
 
     private void Move(float deltaTime) => 
-      move.Dash(dashDirection, deltaTime, dashData.DashStepValue);
+      move.Dash(hero.transform.forward, deltaTime, dashData.DashStepValue);
 
     private void ChangeDashingState(bool isEnable) => 
       isDashing = isEnable;
 
     private bool IsDashEnd() => 
       dashDuration >= dashData.MaxDuration;
+
+    private void Attack() => 
+      dashHitter.Attack();
+
+    private bool IsHit() => 
+      dashHitter.IsHit();
   }
 }

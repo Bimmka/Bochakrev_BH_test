@@ -64,7 +64,7 @@ namespace Features.Player.Scripts.Base
             cameraRotator = new HeroCameraObserver(camera.transform, cameraStaticData, cameraTarget);
             cameraRotator.InitializeCamera();
             
-            HeroStatesContainer container = new HeroStatesContainer(stateMachineObserver, move, cameraRotator, animator, dashStaticData);
+            HeroStatesContainer container = new HeroStatesContainer(stateMachineObserver, move, cameraRotator, animator, dashStaticData, characterController);
             
             stateMachineObserver.Construct(container);
         }
