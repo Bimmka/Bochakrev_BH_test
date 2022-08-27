@@ -5,6 +5,7 @@ using Features.Player.Scripts.HeroCamera;
 using Features.Player.Scripts.HeroMachine.States;
 using Features.Player.Scripts.Move;
 using Features.StateMachine;
+using Features.StaticData.Hero.Dash;
 
 namespace Features.Player.Scripts.HeroMachine.Base
 {
@@ -12,15 +13,18 @@ namespace Features.Player.Scripts.HeroMachine.Base
   {
     private readonly HeroStateMachineObserver hero;
     private readonly HeroMove move;
-    private readonly CameraRotator cameraRotator;
+    private readonly HeroCameraObserver heroCamera;
     private readonly SimpleAnimator animator;
+    private readonly HeroDashStaticData dashStaticData;
     private readonly Dictionary<Type, BaseStateMachineState> states;
-    public HeroStatesContainer(HeroStateMachineObserver hero, HeroMove move, CameraRotator cameraRotator, SimpleAnimator animator)
+    public HeroStatesContainer(HeroStateMachineObserver hero, HeroMove move, HeroCameraObserver heroCamera, SimpleAnimator animator,
+      HeroDashStaticData dashStaticData)
     {
       this.hero = hero;
       this.move = move;
-      this.cameraRotator = cameraRotator;
+      this.heroCamera = heroCamera;
       this.animator = animator;
+      this.dashStaticData = dashStaticData;
       states = new Dictionary<Type, BaseStateMachineState>(5);
     }
 
@@ -41,19 +45,19 @@ namespace Features.Player.Scripts.HeroMachine.Base
 
     private void CreateIdleState()
     {
-      HeroIdleState state = new HeroIdleState(hero, cameraRotator, animator, "IsIdle");
+      HeroIdleState state = new HeroIdleState(hero, heroCamera, animator, "IsIdle");
       SaveState(state);
     }
 
     private void CreateMoveState()
     {
-      HeroMoveState state = new HeroMoveState(hero,move, cameraRotator, animator, "IsMove");
+      HeroMoveState state = new HeroMoveState(hero,move, heroCamera, animator, "IsMove");
       SaveState(state);
     }
 
     private void CreateDashState()
     {
-      HeroDashState state = new HeroDashState(hero,move, cameraRotator, animator, "IsDash");
+      HeroDashState state = new HeroDashState(hero,move, heroCamera, animator, "IsDash", dashStaticData);
       SaveState(state);
     }
 

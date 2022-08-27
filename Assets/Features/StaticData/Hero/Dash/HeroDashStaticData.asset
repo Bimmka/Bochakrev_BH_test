@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4f0a1d5736f41b58186a7f0d3eb5254, type: 3}
-  m_Name: HeroCameraRotateStaticData
+  m_Script: {fileID: 11500000, guid: d69faefc0ab74e76b57b4cb6394ae7c4, type: 3}
+  m_Name: HeroDashStaticData
   m_EditorClassIdentifier: 
-  HorizontalSensitive: 1000
-  VerticalSensitive: 500
-  StartAnglesValue: {x: 35, y: 0}
-  DistanceFromTarget: 6
-  SmoothTime: 0.1
+  MaxDuration: 1
+  DashStepValue: 20

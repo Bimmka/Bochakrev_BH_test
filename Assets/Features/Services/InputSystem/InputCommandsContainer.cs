@@ -38,7 +38,7 @@ namespace Features.Services.InputSystem
         case InputCommandType.SpecialAction:
           return new InputCommandBool(InputCommandType.SpecialAction, false);
         case InputCommandType.CameraRotate:
-          return new InputCommandAxis(InputCommandType.CameraRotate, 0);
+          return new InputCommandVector(InputCommandType.CameraRotate, Vector2.zero);
         default:
           throw new ArgumentOutOfRangeException(nameof(type), type, null);
       }

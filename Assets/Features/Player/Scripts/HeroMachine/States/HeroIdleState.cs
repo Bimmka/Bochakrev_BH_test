@@ -8,27 +8,14 @@ namespace Features.Player.Scripts.HeroMachine.States
 {
   public class HeroIdleState : HeroStateMachineState
   {
-    private readonly CameraRotator cameraRotator;
+    private readonly HeroCameraObserver cameraRotator;
 
-    public HeroIdleState(HeroStateMachineObserver hero, CameraRotator cameraRotator, SimpleAnimator animator, string parameterName) : 
+    public HeroIdleState(HeroStateMachineObserver hero, HeroCameraObserver cameraRotator, SimpleAnimator animator, string parameterName) : 
       base(hero, animator, parameterName)
     {
       this.cameraRotator = cameraRotator;
     }
 
-    public override void Update(IInputCommand[] commands, int commandsCount, float deltaTime)
-    {
-      base.Update(commands, commandsCount, deltaTime);
-      
-      if (commandsCount == 0)
-        return;
-      
-      for (int i = 0; i < commandsCount; i++)
-      {
-        ApplyCommand(commands[i], deltaTime);
-      }
-    }
-    
     protected override void ApplyMoveCommand(InputCommandVector command, float deltaTime)
     {
       base.ApplyMoveCommand(command, deltaTime);
@@ -43,7 +30,7 @@ namespace Features.Player.Scripts.HeroMachine.States
     {
       base.ApplyCameraRotateCommand(command, deltaTime);
       
-      cameraRotator.Rotate(command.Vector);
+      cameraRotator.Rotate(command.Vector, deltaTime);
     }
 
     protected override void ApplySpecialCommand(InputCommandBool command, float deltaTime)

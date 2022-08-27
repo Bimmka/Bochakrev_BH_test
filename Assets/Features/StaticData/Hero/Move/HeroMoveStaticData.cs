@@ -6,6 +6,5 @@ namespace Features.StaticData.Hero.Move
   public class HeroMoveStaticData : ScriptableObject
   {
     public float WalkSpeed = 2f;
-    public float DashSpeed = 3f;
   }
 }

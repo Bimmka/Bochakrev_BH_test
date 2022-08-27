@@ -10,28 +10,15 @@ namespace Features.Player.Scripts.HeroMachine.States
   public class HeroMoveState : HeroStateMachineState
   {
     private readonly HeroMove move;
-    private readonly CameraRotator cameraRotator;
+    private readonly HeroCameraObserver cameraRotator;
 
-    public HeroMoveState(HeroStateMachineObserver hero, HeroMove move, CameraRotator cameraRotator, SimpleAnimator animator, string parameterName) : 
+    public HeroMoveState(HeroStateMachineObserver hero, HeroMove move, HeroCameraObserver cameraRotator, SimpleAnimator animator, string parameterName) : 
       base(hero, animator, parameterName)
     {
       this.move = move;
       this.cameraRotator = cameraRotator;
     }
 
-    public override void Update(IInputCommand[] commands, int commandsCount, float deltaTime)
-    {
-      base.Update(commands, commandsCount, deltaTime);
-      
-      if (commandsCount == 0)
-        return;
-      
-      for (int i = 0; i < commandsCount; i++)
-      {
-        ApplyCommand(commands[i], deltaTime);
-      }
-    }
-    
     protected override void ApplyMoveCommand(InputCommandVector command, float deltaTime)
     {
       base.ApplyMoveCommand(command, deltaTime);
@@ -42,11 +29,21 @@ namespace Features.Player.Scripts.HeroMachine.States
         move.Move(command.Vector, deltaTime);
     }
 
+    protected override void ApplySpecialCommand(InputCommandBool command, float deltaTime)
+    {
+      base.ApplySpecialCommand(command, deltaTime);
+      
+      HeroDashState state = GetState<HeroDashState>();
+      
+      if (state.IsCanDash())
+        ChangeState<HeroDashState>();
+    }
+
     protected override void ApplyCameraRotateCommand(InputCommandVector command, float deltaTime)
     {
       base.ApplyCameraRotateCommand(command, deltaTime);
       
-      cameraRotator.Rotate(command.Vector);
+      cameraRotator.Rotate(command.Vector, deltaTime);
     }
   }
 }

@@ -32,7 +32,16 @@ namespace Features.Player.Scripts.HeroMachine.Base
       animator.SetBool(parameterName, false);
     }
 
-    public virtual void Update(IInputCommand[] commands, int commandsCount, float deltaTime) {}
+    public virtual void Update(IInputCommand[] commands, int commandsCount, float deltaTime)
+    {
+      if (commandsCount == 0)
+        return;
+      
+      for (int i = 0; i < commandsCount; i++)
+      {
+        ApplyCommand(commands[i], deltaTime);
+      }
+    }
 
     protected void ChangeState<TState>() where TState : HeroStateMachineState => 
       hero.ChangeState<TState>();

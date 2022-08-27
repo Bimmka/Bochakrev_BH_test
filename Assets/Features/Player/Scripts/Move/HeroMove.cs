@@ -31,13 +31,13 @@ namespace Features.Player.Scripts.Move
       heroController.Move(moveDirection * (moveData.WalkSpeed * deltaTime));
     }
     
-    public void Dash(Vector2 direction, float deltaTime)
+    public void Dash(Vector2 direction, float deltaTime, float step)
     {
       Vector3 moveDirection = MoveDirection(direction);
       if (heroTransform.forward.IsEqualMoveDirection(moveDirection) == false)
         rotate.DashRotate(moveDirection);
 
-      heroController.Move(moveDirection * (moveData.DashSpeed * deltaTime));
+      heroController.Move(moveDirection * (step * deltaTime));
     }
 
     private Vector3 MoveDirection(Vector2 inputDirection)

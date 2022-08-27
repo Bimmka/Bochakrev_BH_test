@@ -1,24 +1,25 @@
-﻿using UnityEngine;
+﻿using Features.StaticData.InputBindings;
+using UnityEngine;
 
 namespace Features.Services.InputSystem
 {
   public class InputService : IInputService
   {
-    private const string HorizontalMove = "Horizontal";
-    private const string VerticalMove = "Vertical";
-    private const string HorizontalCamera = "Mouse X";
-    private const string VerticalCamera = "Mouse Y";
-    private const KeyCode SpecialActionKeyCode = KeyCode.F;
-    
+    private readonly InputBindingsStaticData bindingsData;
     private readonly InputCommandsContainer commandContainer;
 
-    public InputService()
+    public bool IsCleanedUp { get; private set; }
+
+    public InputService(InputBindingsStaticData bindingsData)
     {
+      this.bindingsData = bindingsData;
       commandContainer = new InputCommandsContainer();
     }
 
-    public void Cleanup() { }
-    
+    public void Cleanup()
+    {
+      IsCleanedUp = true;
+    }
 
     public void ReadInput(IInputCommand[] readedInputs, ref int inputIndex)
     {
@@ -32,7 +33,7 @@ namespace Features.Services.InputSystem
         AddCommand(readedInputs, ref inputIndex, command);
       }
 
-      if (IsFitInLength(readedInputs, inputIndex))
+      if (IsCameraRotatePressed() && IsFitInLength(readedInputs, inputIndex))
       {
         command = commandContainer.Command(InputCommandType.CameraRotate);
         
@@ -52,10 +53,8 @@ namespace Features.Services.InputSystem
       
     }
 
-    private bool IsFitInLength(IInputCommand[] readedInputs, int inputIndex)
-    {
-      return inputIndex < readedInputs.Length;
-    }
+    private bool IsFitInLength(IInputCommand[] readedInputs, int inputIndex) => 
+      inputIndex < readedInputs.Length;
 
     private void AddCommand(IInputCommand[] readedInputs, ref int index, IInputCommand command)
     {
@@ -64,12 +63,15 @@ namespace Features.Services.InputSystem
     }
 
     private Vector2 MoveValue() => 
-      new Vector2(Input.GetAxis(HorizontalMove), Input.GetAxis(VerticalMove));
+      new Vector2(Input.GetAxis(bindingsData.HorizontalMove), Input.GetAxis(bindingsData.VerticalMove));
 
     private Vector2 CameraRotateValue() => 
-      new Vector2(Input.GetAxis(HorizontalCamera), Input.GetAxis(VerticalCamera));
+      new Vector2(Input.GetAxis(bindingsData.VerticalCameraMove), Input.GetAxis(bindingsData.HorizontalCameraMove));
 
     private bool IsSpecialActionPressed() => 
-      Input.GetKeyDown(SpecialActionKeyCode);
+      Input.GetKeyDown(bindingsData.SpecialActionKeyCode);
+
+    private bool IsCameraRotatePressed() => 
+      Input.GetKey(bindingsData.CameraRotateButton);
   }
 }
