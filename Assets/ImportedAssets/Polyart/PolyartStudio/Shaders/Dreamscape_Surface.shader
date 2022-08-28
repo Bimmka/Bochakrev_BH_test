@@ -4,7 +4,7 @@ Shader "Polyart/Dreamscape Surface"
 {
 	Properties
 	{
-		[Header(MAIN)]_AlbedoTint("Albedo Tint", Color) = (1,1,1,0)
+		[PerRendererData]_AlbedoTint("Albedo Tint", Color) = (1,1,1,0)
 		_AlbedoTexture("Albedo Texture", 2D) = "white" {}
 		_NormalTexture("Normal Texture", 2D) = "bump" {}
 		_NormalIntensity("Normal Intensity", Range( -2 , 2)) = 1

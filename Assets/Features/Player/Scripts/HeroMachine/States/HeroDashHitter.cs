@@ -41,7 +41,7 @@ namespace Features.Player.Scripts.HeroMachine.States
       HeroDamageHandler damageHandler;
       for (int i = 0; i < lastHitCount; i++)
       {
-        if (hits[i].TryGetComponent(out damageHandler) && damageHandler.IsCanBeDamageable)
+        if (hits[i].TryGetComponent(out damageHandler) && damageHandler.IsDamaged == false)
           damageHandler.Damage();
       }
     }
