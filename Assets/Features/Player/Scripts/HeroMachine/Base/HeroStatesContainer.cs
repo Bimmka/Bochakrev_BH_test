@@ -18,9 +18,13 @@ namespace Features.Player.Scripts.HeroMachine.Base
     private readonly SimpleAnimator animator;
     private readonly HeroDashStaticData dashStaticData;
     private readonly CharacterController characterController;
+    private readonly ILevelScoreService levelScoreService;
+    private readonly string heroName;
+    
     private readonly Dictionary<Type, BaseStateMachineState> states;
-    public HeroStatesContainer(HeroStateMachineObserver hero, HeroMove move, HeroCameraObserver heroCamera, SimpleAnimator animator,
-      HeroDashStaticData dashStaticData, CharacterController characterController)
+    public HeroStatesContainer(HeroStateMachineObserver hero, HeroMove move, HeroCameraObserver heroCamera,
+      SimpleAnimator animator, HeroDashStaticData dashStaticData, CharacterController characterController, 
+      ILevelScoreService levelScoreService, string heroName)
     {
       this.hero = hero;
       this.move = move;
@@ -28,6 +32,8 @@ namespace Features.Player.Scripts.HeroMachine.Base
       this.animator = animator;
       this.dashStaticData = dashStaticData;
       this.characterController = characterController;
+      this.levelScoreService = levelScoreService;
+      this.heroName = heroName;
       states = new Dictionary<Type, BaseStateMachineState>(5);
     }
 
@@ -61,7 +67,7 @@ namespace Features.Player.Scripts.HeroMachine.Base
     private void CreateDashState()
     {
       HeroDashState state = new HeroDashState(hero,move, heroCamera, animator, "IsDash", dashStaticData, 
-        characterController.height, characterController.radius);
+        characterController.height, characterController.radius, levelScoreService, heroName);
       SaveState(state);
     }
 

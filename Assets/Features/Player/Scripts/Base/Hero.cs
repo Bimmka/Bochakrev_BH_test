@@ -4,6 +4,7 @@ using Features.Player.Scripts.HeroInput;
 using Features.Player.Scripts.HeroMachine.Base;
 using Features.Player.Scripts.Move;
 using Features.Player.Scripts.Rotate;
+using Features.Services.InputSystem;
 using Features.StaticData.Hero.CameraRotate;
 using Features.StaticData.Hero.Dash;
 using Features.StaticData.Hero.Move;
@@ -29,6 +30,15 @@ namespace Features.Player.Scripts.Base
         [SerializeField] private Transform cameraTarget;
 
         private HeroCameraObserver cameraRotator;
+        private ILevelScoreService levelScoreService;
+        private string heroName;
+
+        public void Construct(ILevelScoreService levelScoreService, IInputService inputService, string heroName)
+        {
+            this.heroName = heroName;
+            this.levelScoreService = levelScoreService;
+            input.Construct(inputService);
+        }
 
         private void Awake()
         {
@@ -64,7 +74,8 @@ namespace Features.Player.Scripts.Base
             cameraRotator = new HeroCameraObserver(camera.transform, cameraStaticData, cameraTarget);
             cameraRotator.InitializeCamera();
             
-            HeroStatesContainer container = new HeroStatesContainer(stateMachineObserver, move, cameraRotator, animator, dashStaticData, characterController);
+            HeroStatesContainer container = new HeroStatesContainer(stateMachineObserver, move, cameraRotator, animator, dashStaticData, characterController, 
+                levelScoreService, heroName);
             
             stateMachineObserver.Construct(container);
         }

@@ -13,7 +13,7 @@ namespace Features.Player.Scripts.HeroMachine.States
     
     private readonly Collider[] hits;
 
-    private int lastHitCount;
+    public int LastHitCount { get; private set; }
 
     public HeroDashHitter(HeroDashHitData hitData, Transform hero, float heroColliderHeight, float heroColliderRadius)
     {
@@ -26,20 +26,20 @@ namespace Features.Player.Scripts.HeroMachine.States
 
     public bool IsHit()
     {
-      lastHitCount = Physics.OverlapCapsuleNonAlloc(
+      LastHitCount = Physics.OverlapCapsuleNonAlloc(
         HeroColliderDown(), 
         HeroColliderUp(), 
         heroColliderRadius, 
         hits, 
         hitData.HitLayer);
 
-      return lastHitCount > 0;
+      return LastHitCount > 0;
     }
 
     public void Attack()
     {
       HeroDamageHandler damageHandler;
-      for (int i = 0; i < lastHitCount; i++)
+      for (int i = 0; i < LastHitCount; i++)
       {
         if (hits[i].TryGetComponent(out damageHandler) && damageHandler.IsDamaged == false)
           damageHandler.Damage();

@@ -40,7 +40,9 @@ namespace Features.GameStates.States
     private void OnLoad()
     {
       Hero spawnedHero = assetProvider.Instantiate(heroPrefab, Vector3.zero);
-      spawnedHero.GetComponent<HeroInputObserver>().Construct(inputService);
+      LevelScoreService levelScoreService = new LevelScoreService();
+      spawnedHero.Construct(levelScoreService, inputService, "Player");
+      
       gameStateMachine.Enter<GameLoopState>();
     }
   }

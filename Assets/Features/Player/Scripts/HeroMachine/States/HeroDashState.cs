@@ -12,20 +12,25 @@ namespace Features.Player.Scripts.HeroMachine.States
     private readonly HeroMove move;
     private readonly HeroCameraObserver cameraRotator;
     private readonly HeroDashStaticData dashData;
+    private readonly ILevelScoreService levelScoreService;
+    private readonly string heroName;
 
     private float dashDuration;
     private bool isDashing;
 
     private HeroDashHitter dashHitter;
 
-    public HeroDashState(HeroStateMachineObserver hero, HeroMove move, HeroCameraObserver cameraRotator, SimpleAnimator animator, string parameterName, 
-      HeroDashStaticData dashData, float colliderHeight, float colliderRadius) : 
+    public HeroDashState(HeroStateMachineObserver hero, HeroMove move, HeroCameraObserver cameraRotator,
+      SimpleAnimator animator, string parameterName, HeroDashStaticData dashData, float colliderHeight, float colliderRadius, 
+      ILevelScoreService levelScoreService, string heroName) : 
       base(hero, animator, parameterName)
     {
       this.move = move;
       this.cameraRotator = cameraRotator;
       this.dashData = dashData;
-      
+      this.levelScoreService = levelScoreService;
+      this.heroName = heroName;
+
       dashHitter = new HeroDashHitter(dashData.HitData, hero.transform, colliderHeight, colliderRadius);
     }
 
@@ -39,7 +44,10 @@ namespace Features.Player.Scripts.HeroMachine.States
     public override void Update(IInputCommand[] commands, int commandsCount, float deltaTime)
     {
       if (IsHit())
+      {
         Attack();
+        AddScore();
+      }
       
       Move(deltaTime);
       UpdateDashDuration(deltaTime);
@@ -53,6 +61,9 @@ namespace Features.Player.Scripts.HeroMachine.States
           ChangeState<HeroIdleState>();
       }
     }
+
+    private void AddScore() => 
+      levelScoreService.AddScore(heroName, dashHitter.LastHitCount);
 
     private bool IsHeroMove(IInputCommand[] commands, int commandsCount)
     {
