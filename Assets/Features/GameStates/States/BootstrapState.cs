@@ -1,8 +1,10 @@
 ﻿using Features.GameStates.States.Interfaces;
 using Features.Services;
 using Features.Services.Assets;
+using Features.Services.EntityFactories;
 using Features.Services.InputSystem;
 using Features.Services.LevelScore;
+using Features.Services.Network;
 using Features.Services.StaticData;
 using Features.Services.UI.Factory.BaseUI;
 using Features.Services.UI.Windows;
@@ -42,6 +44,8 @@ namespace Features.GameStates.States
       RegisterLevelScoreService();
       RegisterUIFactory();
       RegisterWindowsService();
+      RegisterHeroFactory();
+      RegisterNetworkManagerService();
     }
 
     private void RegisterStateMachine() => 
@@ -74,5 +78,22 @@ namespace Features.GameStates.States
 
     private void RegisterWindowsService() => 
       services.RegisterSingle(new WindowsService(services.Single<IUIFactory>()));
+
+    private void RegisterHeroFactory()
+    {
+      services.RegisterSingle(new HeroFactory(
+        services.Single<IAssetProvider>(), 
+        services.Single<IStaticDataService>(), 
+        services.Single<ILevelScoreService>(),
+        services.Single<IInputService>())
+      );
+    }
+
+    private void RegisterNetworkManagerService()
+    {
+      INetwork network = services.Single<IAssetProvider>().Instantiate(services.Single<IStaticDataService>().NetworkManagerPrefab());
+      network.Construct(services.Single<IHeroFactory>(), services.Single<IWindowsService>());
+      services.RegisterSingle(network);
+    }
   }
 }

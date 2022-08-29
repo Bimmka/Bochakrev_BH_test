@@ -1,6 +1,6 @@
 using Features.Extensions;
 using Features.Player.Scripts.Rotate;
-using Features.StaticData.Hero.Move;
+using Features.StaticData.HeroData.Move;
 using UnityEngine;
 
 namespace Features.Player.Scripts.Move

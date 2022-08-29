@@ -47,18 +47,12 @@ namespace Features.GameStates.States
     private void OnLoad()
     {
       CreateHUD();
-      CreatePlayer();
       levelScoreService.RegisterPlayer("Player");
       gameStateMachine.Enter<GameLoopState>();
     }
 
     private void CreateHUD() => 
       windowsService.Open(WindowId.LevelMenu);
-
-    private void CreatePlayer()
-    {
-      Hero spawnedHero = assetProvider.Instantiate(heroPrefab, Vector3.zero);
-      spawnedHero.Construct(levelScoreService, inputService, "Player");
-    }
+    
   }
 }

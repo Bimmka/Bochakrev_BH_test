@@ -1,4 +1,4 @@
-using Features.StaticData.Hero.CameraRotate;
+using Features.StaticData.HeroData.CameraRotate;
 using UnityEngine;
 
 namespace Features.Player.Scripts.HeroCamera

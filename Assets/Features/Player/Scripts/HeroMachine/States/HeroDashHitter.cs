@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Features.Player.Scripts.Damage;
-using Features.StaticData.Hero.Dash;
+using Features.StaticData.HeroData.Dash;
 using UnityEngine;
 
 namespace Features.Player.Scripts.HeroMachine.States

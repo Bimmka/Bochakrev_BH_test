@@ -5,7 +5,7 @@ using Features.Player.Scripts.HeroMachine.Base;
 using Features.Player.Scripts.Move;
 using Features.Services.InputSystem;
 using Features.Services.LevelScore;
-using Features.StaticData.Hero.Dash;
+using Features.StaticData.HeroData.Dash;
 using UnityEngine;
 
 namespace Features.Player.Scripts.HeroMachine.States

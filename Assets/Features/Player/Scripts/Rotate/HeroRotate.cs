@@ -1,4 +1,4 @@
-﻿using Features.StaticData.Hero.Rotate;
+﻿using Features.StaticData.HeroData.Rotate;
 using UnityEngine;
 
 namespace Features.Player.Scripts.Rotate

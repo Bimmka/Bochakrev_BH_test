@@ -1,5 +1,5 @@
 using System.Collections;
-using Features.StaticData.Hero.Damage;
+using Features.StaticData.HeroData.Damage;
 using UnityEngine;
 
 namespace Features.Player.Scripts.Damage
@@ -7,13 +7,16 @@ namespace Features.Player.Scripts.Damage
   public class HeroDamageHandler : MonoBehaviour
   {
     [SerializeField] private HeroDamageStaticData damageData;
-    [SerializeField] private Renderer heroRender;
 
+    private Renderer heroRender;
     private DamageDisplayer displayer;
     public bool IsDamaged { get; private set; }
 
-    private void Awake() => 
+    public void Construct(Renderer modelRenderer)
+    {
+      heroRender = modelRenderer;
       displayer = new DamageDisplayer(heroRender, damageData.DamagedColor, damageData.DefaultColor);
+    }
 
     public void Damage()
     {

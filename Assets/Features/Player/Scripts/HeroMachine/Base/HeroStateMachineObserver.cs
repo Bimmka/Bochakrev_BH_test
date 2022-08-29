@@ -8,15 +8,17 @@ namespace Features.Player.Scripts.HeroMachine.Base
 {
   public class HeroStateMachineObserver : MonoBehaviour
   {
-    [SerializeField] private SimpleAnimator animator;
+    private SimpleAnimator animator;
     
     private HeroStateMachine stateMachine;
     private HeroStatesContainer statesContainer;
     
-    public void Construct(HeroStatesContainer container)
+    public void Construct(HeroStatesContainer container, SimpleAnimator animator)
     {
       stateMachine = new HeroStateMachine();
       statesContainer = container;
+
+      this.animator = animator;
     }
 
     public void Subscribe() => 
