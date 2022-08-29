@@ -5,6 +5,7 @@ using Features.Player.Scripts.HeroMachine.Base;
 using Features.Player.Scripts.Move;
 using Features.Player.Scripts.Rotate;
 using Features.Services.InputSystem;
+using Features.Services.LevelScore;
 using Features.StaticData.Hero.CameraRotate;
 using Features.StaticData.Hero.Dash;
 using Features.StaticData.Hero.Move;
@@ -38,12 +39,9 @@ namespace Features.Player.Scripts.Base
             this.heroName = heroName;
             this.levelScoreService = levelScoreService;
             input.Construct(inputService);
-        }
-
-        private void Awake()
-        {
-           /* if (IsNotLocalPlayer())
-                return;*/
+            
+            /* if (IsNotLocalPlayer())
+               return;*/
 
             InitializeStateMachine();
         }

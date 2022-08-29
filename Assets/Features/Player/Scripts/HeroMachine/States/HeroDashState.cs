@@ -1,9 +1,12 @@
+using System.Collections.Generic;
 using Features.Animatons;
 using Features.Player.Scripts.HeroCamera;
 using Features.Player.Scripts.HeroMachine.Base;
 using Features.Player.Scripts.Move;
 using Features.Services.InputSystem;
+using Features.Services.LevelScore;
 using Features.StaticData.Hero.Dash;
+using UnityEngine;
 
 namespace Features.Player.Scripts.HeroMachine.States
 {
@@ -31,7 +34,7 @@ namespace Features.Player.Scripts.HeroMachine.States
       this.levelScoreService = levelScoreService;
       this.heroName = heroName;
 
-      dashHitter = new HeroDashHitter(dashData.HitData, hero.transform, colliderHeight, colliderRadius);
+      dashHitter = new HeroDashHitter(dashData.HitData, hero.transform, colliderHeight, colliderRadius, AddScore);
     }
 
     public override void Enter()
@@ -43,12 +46,9 @@ namespace Features.Player.Scripts.HeroMachine.States
 
     public override void Update(IInputCommand[] commands, int commandsCount, float deltaTime)
     {
-      if (IsHit())
-      {
+      if (IsHit()) 
         Attack();
-        AddScore();
-      }
-      
+
       Move(deltaTime);
       UpdateDashDuration(deltaTime);
       base.Update(commands, commandsCount, deltaTime);
@@ -63,7 +63,7 @@ namespace Features.Player.Scripts.HeroMachine.States
     }
 
     private void AddScore() => 
-      levelScoreService.AddScore(heroName, dashHitter.LastHitCount);
+      levelScoreService.AddScore(heroName, 1);
 
     private bool IsHeroMove(IInputCommand[] commands, int commandsCount)
     {

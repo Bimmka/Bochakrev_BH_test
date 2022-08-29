@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using Features.GameStates.States;
 using Features.GameStates.States.Interfaces;
 using Features.Player.Scripts.Base;
-using Features.SceneLoading;
 using Features.SceneLoading.Scripts;
 using Features.Services;
 using Features.Services.Assets;
 using Features.Services.InputSystem;
+using Features.Services.LevelScore;
+using Features.Services.UI.Windows;
 using Features.StaticData.InputBindings;
-using UnityEngine;
 
 namespace Features.GameStates
 {
@@ -18,7 +18,7 @@ namespace Features.GameStates
     private readonly Dictionary<Type, IExitableState> _states;
     private IExitableState _activeState;
 
-    private AllServices services;
+    private readonly AllServices services;
 
     public GameStateMachine(ISceneLoader sceneLoader, ref AllServices services, Hero heroPrefab,
       InputBindingsStaticData bindingsData)
@@ -28,13 +28,18 @@ namespace Features.GameStates
         [typeof(BootstrapState)] = new BootstrapState(
           this, 
           ref services,
-          bindingsData),
+          bindingsData
+          ),
         [typeof(GameLoadState)] = new GameLoadState(
           this,
           sceneLoader,
           services.Single<IAssetProvider>(),
           services.Single<IInputService>(),
-          heroPrefab),
+          heroPrefab,
+          services.Single<ILevelScoreService>(),
+          services.Single<IWindowsService>()
+          ),
+        
         [typeof(GameLoopState)] = new GameLoopState()
       };
 

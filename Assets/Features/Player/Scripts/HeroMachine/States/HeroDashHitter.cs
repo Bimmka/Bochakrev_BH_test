@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Features.Player.Scripts.Damage;
 using Features.StaticData.Hero.Dash;
 using UnityEngine;
@@ -10,17 +12,21 @@ namespace Features.Player.Scripts.HeroMachine.States
     private readonly Transform hero;
     private readonly float heroColliderHeight;
     private readonly float heroColliderRadius;
-    
+    private readonly Action actionOnHit;
+
     private readonly Collider[] hits;
 
     public int LastHitCount { get; private set; }
+    public IReadOnlyCollection<Collider> Hits => hits;
 
-    public HeroDashHitter(HeroDashHitData hitData, Transform hero, float heroColliderHeight, float heroColliderRadius)
+    public HeroDashHitter(HeroDashHitData hitData, Transform hero, float heroColliderHeight, float heroColliderRadius,
+      Action actionOnHit)
     {
       this.hitData = hitData;
       this.hero = hero;
       this.heroColliderHeight = heroColliderHeight;
       this.heroColliderRadius = heroColliderRadius;
+      this.actionOnHit = actionOnHit;
       hits = new Collider[hitData.MaxHitCount];
     }
 
@@ -42,7 +48,10 @@ namespace Features.Player.Scripts.HeroMachine.States
       for (int i = 0; i < LastHitCount; i++)
       {
         if (hits[i].TryGetComponent(out damageHandler) && damageHandler.IsDamaged == false)
+        {
           damageHandler.Damage();
+          actionOnHit?.Invoke();
+        }
       }
     }
 

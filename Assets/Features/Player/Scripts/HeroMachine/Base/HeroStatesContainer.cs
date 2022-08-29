@@ -4,6 +4,7 @@ using Features.Animatons;
 using Features.Player.Scripts.HeroCamera;
 using Features.Player.Scripts.HeroMachine.States;
 using Features.Player.Scripts.Move;
+using Features.Services.LevelScore;
 using Features.StateMachine;
 using Features.StaticData.Hero.Dash;
 using UnityEngine;

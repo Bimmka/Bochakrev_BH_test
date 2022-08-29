@@ -2,6 +2,10 @@
 using Features.Services;
 using Features.Services.Assets;
 using Features.Services.InputSystem;
+using Features.Services.LevelScore;
+using Features.Services.StaticData;
+using Features.Services.UI.Factory.BaseUI;
+using Features.Services.UI.Windows;
 using Features.StaticData.InputBindings;
 
 namespace Features.GameStates.States
@@ -34,6 +38,10 @@ namespace Features.GameStates.States
       RegisterStateMachine();
       RegisterInputService(bindingsData);
       RegisterAssetsService();
+      RegisterStaticDataService();
+      RegisterLevelScoreService();
+      RegisterUIFactory();
+      RegisterWindowsService();
     }
 
     private void RegisterStateMachine() => 
@@ -44,5 +52,27 @@ namespace Features.GameStates.States
 
     private void RegisterAssetsService() => 
       services.RegisterSingle(new AssetProvider());
+
+    private void RegisterStaticDataService()
+    {
+      IStaticDataService dataService = new StaticDataService();
+      dataService.Load();
+      services.RegisterSingle(dataService);
+    }
+
+    private void RegisterLevelScoreService() => 
+      services.RegisterSingle(new LevelScoreService());
+
+    private void RegisterUIFactory()
+    {
+      services.RegisterSingle(new UIFactory(
+        services.Single<IGameStateMachine>(),
+        services.Single<IAssetProvider>(),
+        services.Single<IStaticDataService>(),
+        services.Single<ILevelScoreService>()));
+    }
+
+    private void RegisterWindowsService() => 
+      services.RegisterSingle(new WindowsService(services.Single<IUIFactory>()));
   }
 }
