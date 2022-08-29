@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Features.StaticData.Hero.Damage
+namespace Features.StaticData.HeroData.Damage
 {
   [CreateAssetMenu(fileName = "HeroDamageStaticData", menuName = "StaticData/Hero/Create Damage Data", order = 52)]
   public class HeroDamageStaticData : ScriptableObject

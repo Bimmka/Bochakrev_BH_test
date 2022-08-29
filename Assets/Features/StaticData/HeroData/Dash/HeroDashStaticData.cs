@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Features.StaticData.Hero.Dash
+namespace Features.StaticData.HeroData.Dash
 {
   [CreateAssetMenu(fileName = "HeroDashStaticData", menuName = "StaticData/Hero/Create Hero Dash Data", order = 52)]
   public class HeroDashStaticData : ScriptableObject

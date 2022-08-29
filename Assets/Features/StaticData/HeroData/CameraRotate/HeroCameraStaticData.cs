@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Features.StaticData.Hero.CameraRotate
+namespace Features.StaticData.HeroData.CameraRotate
 {
   [CreateAssetMenu(fileName = "HeroCameraStaticData", menuName = "StaticData/Hero/Create Camera Data", order = 52)]
   public class HeroCameraStaticData : ScriptableObject

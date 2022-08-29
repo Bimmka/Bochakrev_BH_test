@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Features.StaticData.Hero.Dash
+namespace Features.StaticData.HeroData.Dash
 {
   [Serializable]
   public struct HeroDashHitData

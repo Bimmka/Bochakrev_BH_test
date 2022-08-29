@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Features.StaticData.Hero.Rotate
+namespace Features.StaticData.HeroData.Rotate
 {
   [CreateAssetMenu(fileName = "HeroRotateStaticData", menuName = "StaticData/Hero/Create Hero Rotate Data", order = 52)]
   public class HeroRotateStaticData : ScriptableObject
