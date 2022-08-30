@@ -9,11 +9,9 @@ namespace Features.Services.Network
   public class CustomNetworkManager : NetworkManager, INetwork
   {
     private IHeroFactory heroFactory;
-    private IWindowsService windowsService;
 
-    public void Construct(IHeroFactory heroFactory, IWindowsService windowsService)
+    public void Construct(IHeroFactory heroFactory)
     {
-      this.windowsService = windowsService;
       this.heroFactory = heroFactory;
     }
 
@@ -22,6 +20,11 @@ namespace Features.Services.Network
       base.OnStartServer();
       
       Hero hero = heroFactory.Spawn($"Player{Random.Range(0, 20)}", RandomPosition());
+    }
+
+    public override void OnClientConnect()
+    {
+      base.OnClientConnect();
     }
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)

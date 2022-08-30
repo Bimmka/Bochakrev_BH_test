@@ -42,10 +42,10 @@ namespace Features.GameStates.States
       RegisterAssetsService();
       RegisterStaticDataService();
       RegisterLevelScoreService();
-      RegisterUIFactory();
-      RegisterWindowsService();
       RegisterHeroFactory();
       RegisterNetworkManagerService();
+      RegisterUIFactory();
+      RegisterWindowsService();
     }
 
     private void RegisterStateMachine() => 
@@ -73,7 +73,8 @@ namespace Features.GameStates.States
         services.Single<IGameStateMachine>(),
         services.Single<IAssetProvider>(),
         services.Single<IStaticDataService>(),
-        services.Single<ILevelScoreService>()));
+        services.Single<ILevelScoreService>(),
+        services.Single<INetwork>()));
     }
 
     private void RegisterWindowsService() => 
@@ -92,7 +93,7 @@ namespace Features.GameStates.States
     private void RegisterNetworkManagerService()
     {
       INetwork network = services.Single<IAssetProvider>().Instantiate(services.Single<IStaticDataService>().NetworkManagerPrefab());
-      network.Construct(services.Single<IHeroFactory>(), services.Single<IWindowsService>());
+      network.Construct(services.Single<IHeroFactory>());
       services.RegisterSingle(network);
     }
   }

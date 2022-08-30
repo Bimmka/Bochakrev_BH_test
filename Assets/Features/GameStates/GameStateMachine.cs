@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using Features.GameStates.States;
 using Features.GameStates.States.Interfaces;
-using Features.Player.Scripts.Base;
 using Features.SceneLoading.Scripts;
 using Features.Services;
-using Features.Services.Assets;
-using Features.Services.InputSystem;
 using Features.Services.LevelScore;
 using Features.Services.UI.Windows;
 using Features.StaticData.InputBindings;
@@ -20,8 +17,7 @@ namespace Features.GameStates
 
     private readonly AllServices services;
 
-    public GameStateMachine(ISceneLoader sceneLoader, ref AllServices services, Hero heroPrefab,
-      InputBindingsStaticData bindingsData)
+    public GameStateMachine(ISceneLoader sceneLoader, ref AllServices services, InputBindingsStaticData bindingsData)
     {
       _states = new Dictionary<Type, IExitableState>
       {
@@ -30,12 +26,15 @@ namespace Features.GameStates
           ref services,
           bindingsData
           ),
+        
+        [typeof(MainMenuState)] = new MainMenuState(
+            sceneLoader,
+            services.Single<IWindowsService>()
+            ),
+        
         [typeof(GameLoadState)] = new GameLoadState(
           this,
           sceneLoader,
-          services.Single<IAssetProvider>(),
-          services.Single<IInputService>(),
-          heroPrefab,
           services.Single<ILevelScoreService>(),
           services.Single<IWindowsService>()
           ),

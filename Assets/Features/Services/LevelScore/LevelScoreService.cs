@@ -5,7 +5,7 @@ namespace Features.Services.LevelScore
 {
     public class LevelScoreService : ILevelScoreService
     {
-        private Dictionary<string, int> score;
+        private readonly Dictionary<string, int> score;
 
         public event Action<Dictionary<string, int>> Changed;
 
