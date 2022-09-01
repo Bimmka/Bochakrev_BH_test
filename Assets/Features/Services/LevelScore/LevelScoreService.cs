@@ -5,57 +5,74 @@ namespace Features.Services.LevelScore
 {
     public class LevelScoreService : ILevelScoreService
     {
-        private readonly Dictionary<string, int> score;
+        private List<PlayerScore> scores = new List<PlayerScore>(5);
 
-        public event Action<Dictionary<string, int>> Changed;
-
-        public LevelScoreService()
-        {
-            score = new Dictionary<string, int>(5);
-        }
+        public event Action<List<PlayerScore>> Changed;
+        public event Action<List<PlayerScore>> NetworkChanged;
 
         public void RegisterPlayer(string nickname)
-        {
-            if (IsContains(nickname))
-                return;
-        
-            score.Add(nickname, 0);
-            NotifyAboutChangeScore();
-        
+        { 
+           scores.Add(new PlayerScore(nickname, 0));
+           NotifyAboutNetworkChangeScore();
+           NotifyAboutChangeScore();
         }
 
         public void RemovePlayer(string nickname)
         {
-            if (IsContains(nickname) == false)
-                return;
+            int index = PlayerIndex(nickname);
 
-            score.Remove(nickname);
+            if (index == -1)
+                return;
+            
+            scores.Remove(scores[index]);
+            NotifyAboutNetworkChangeScore();
             NotifyAboutChangeScore();
         }
 
         public void AddScore(string nickname, int count)
         {
-            if (IsContains(nickname) == false)
+            int index = PlayerIndex(nickname);
+
+            if (index == -1)
                 return;
 
-            score[nickname] += count;
+            scores[index].IncScore(count);
+            NotifyAboutNetworkChangeScore();
+            NotifyAboutChangeScore();
+        }
+
+        public void Change(List<PlayerScore> newScores)
+        {
+            scores = new List<PlayerScore>(newScores);
             NotifyAboutChangeScore();
         }
 
         public void ResetScore()
         {
-            foreach (string key in score.Keys)
+            for (int i = 0; i < scores.Count; i++)
             {
-                score[key] = 0;
+                scores[i].ResetScore();
             }
-        
-            Changed?.Invoke(score);
+
+            NotifyAboutNetworkChangeScore();
+            NotifyAboutChangeScore();
+        }
+
+        private int PlayerIndex(string nickname)
+        {
+            for (int i = 0; i < scores.Count; i++)
+            {
+                if (scores[i].Nickname == nickname)
+                    return i;
+            }
+
+            return -1;
         }
 
         private void NotifyAboutChangeScore() => 
-            Changed?.Invoke(score);
-
-        private bool IsContains(string nickname) => 
-            score.ContainsKey(nickname);
+            Changed?.Invoke(scores);
+        
+        private void NotifyAboutNetworkChangeScore() => 
+            NetworkChanged?.Invoke(scores);
     }
 }

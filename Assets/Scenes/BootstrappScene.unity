@@ -153,7 +153,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curtain: {fileID: 2197872955370472661, guid: 5e0050b3d46137d4aab541462ad79303, type: 3}
-  heroPrefab: {fileID: 3128335701333175230, guid: 625d640c0b90cfb49a0b25a3c42bfe24, type: 3}
   bindingsData: {fileID: 11400000, guid: 3e182b5f6405ebf4b814b0a8055e787c, type: 2}
 --- !u!4 &2057950147
 Transform:

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6004176351970387271}
   - component: {fileID: 6004176351970387321}
   - component: {fileID: 4754066131120409297}
+  - component: {fileID: 6934583726765749010}
   m_Layer: 0
   m_Name: Network Manager
   m_TagString: Untagged
@@ -77,8 +78,8 @@ MonoBehaviour:
   runInBackground: 1
   autoStartServerBuild: 1
   serverTickRate: 30
-  offlineScene: Assets/Scenes/MainMenuScene.unity
-  onlineScene: Assets/Scenes/GameScene.unity
+  offlineScene: 
+  onlineScene: 
   transport: {fileID: 6004176351970387321}
   networkAddress: localhost
   maxConnections: 4
@@ -87,4 +88,18 @@ MonoBehaviour:
   autoCreatePlayer: 0
   playerSpawnMethod: 1
   spawnPrefabs: []
-  modelsStaticData: {fileID: 11400000, guid: 1b256b4e151c4474cb93320d1752591a, type: 2}
+  scorePrefab: {fileID: 7416656692358625813, guid: a15fe8f1612b434438bda48ec91609c8, type: 3}
+--- !u!114 &6934583726765749010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6004176351970387320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6442dc8070ceb41f094e44de0bf87274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offsetX: 0
+  offsetY: 0

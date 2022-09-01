@@ -8,5 +8,7 @@ namespace Features.StaticData.HeroData.Dash
   {
     public LayerMask HitLayer;
     public int MaxHitCount;
+    public float HeightOffsetCoefficientFromCollider;
+    public float RadiusOffsetCoefficientFromCollider;
   }
 }

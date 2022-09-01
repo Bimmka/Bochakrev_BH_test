@@ -68,7 +68,7 @@ namespace Features.Player.Scripts.HeroMachine.Base
     private void CreateDashState()
     {
       HeroDashState state = new HeroDashState(hero,move, heroCamera, animator, "IsDash", dashStaticData, 
-        characterController.height, characterController.radius, levelScoreService, heroName);
+        characterController, levelScoreService, heroName);
       SaveState(state);
     }
 

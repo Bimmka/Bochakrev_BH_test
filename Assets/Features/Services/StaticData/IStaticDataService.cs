@@ -1,5 +1,6 @@
 ﻿using System;
 using Features.Player.Scripts.Base;
+using Features.Services.LevelScore;
 using Features.Services.Network;
 using Features.Services.UI.Factory;
 using Features.StaticData.HeroData.Models;
@@ -13,6 +14,7 @@ namespace Features.Services.StaticData
     void Load();
     WindowInstantiateData ForWindow(WindowId id);
     CustomNetworkManager NetworkManagerPrefab();
+    LevelScoreService ScorePrefab();
     Hero Model(int modelID);
     int ModelID(Guid msgAssetId);
     int RandomModelID();

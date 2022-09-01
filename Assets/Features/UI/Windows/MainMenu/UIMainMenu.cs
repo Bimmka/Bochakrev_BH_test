@@ -1,4 +1,7 @@
+using System;
 using Features.Constants;
+using Features.GameStates;
+using Features.GameStates.States;
 using Features.Services.Network;
 using Features.UI.Windows.Base;
 using TMPro;
@@ -17,9 +20,11 @@ namespace Features.UI.Windows.MainMenu
     [SerializeField] private Button hostLobbyButton;
     
     private INetwork network;
+    private IGameStateMachine gameStateMachine;
 
-    public void Construct(INetwork network)
+    public void Construct(INetwork network, IGameStateMachine gameStateMachine)
     {
+      this.gameStateMachine = gameStateMachine;
       this.network = network;
     }
 
@@ -59,8 +64,9 @@ namespace Features.UI.Windows.MainMenu
 
     private void JoinLobby()
     {
-      network.SetLobbyID(joinLobbyIdInputField.text);
-      network.JoinLobby();
+      GameLoadState state = gameStateMachine.GetState<GameLoadState>();
+      gameStateMachine.Enter<GameLoadState>();
+      state.LoadAsClient(joinLobbyIdInputField.text);
     }
 
     private void TryHostLobby()
@@ -78,7 +84,9 @@ namespace Features.UI.Windows.MainMenu
 
     private void HostLobby()
     {
-      network.CreateHost();
+      GameLoadState state = gameStateMachine.GetState<GameLoadState>();
+      gameStateMachine.Enter<GameLoadState>();
+      state.LoadAsHost();
     }
 
     private bool IsCorrectJoinLobbyID() => 

@@ -5,6 +5,7 @@ using Features.GameStates.States.Interfaces;
 using Features.SceneLoading.Scripts;
 using Features.Services;
 using Features.Services.LevelScore;
+using Features.Services.Network;
 using Features.Services.UI.Windows;
 using Features.StaticData.InputBindings;
 
@@ -36,7 +37,8 @@ namespace Features.GameStates
           this,
           sceneLoader,
           services.Single<ILevelScoreService>(),
-          services.Single<IWindowsService>()
+          services.Single<IWindowsService>(),
+          services.Single<INetwork>()
           ),
         
         [typeof(GameLoopState)] = new GameLoopState()

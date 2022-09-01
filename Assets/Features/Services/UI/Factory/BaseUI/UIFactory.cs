@@ -54,7 +54,7 @@ namespace Features.Services.UI.Factory.BaseUI
       switch (id)
       {
         case WindowId.MainMenu:
-          CreateMainMenu(config, network);
+          CreateMainMenu(config, network, gameStateMachine);
           break;
         case WindowId.LevelMenu:
           CreateLevelMenu(config, levelScoreService);
@@ -65,10 +65,10 @@ namespace Features.Services.UI.Factory.BaseUI
       }
     }
 
-    private void CreateMainMenu(WindowInstantiateData config, INetwork network)
+    private void CreateMainMenu(WindowInstantiateData config, INetwork network, IGameStateMachine gameStateMachine)
     {
       BaseWindow window = InstantiateWindow(config, uiRoot);
-      ((UIMainMenu)window).Construct(network);
+      ((UIMainMenu)window).Construct(network, gameStateMachine);
       NotifyAboutCreateWindow(config.ID, window);
     }
 

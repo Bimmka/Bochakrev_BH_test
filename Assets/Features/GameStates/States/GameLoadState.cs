@@ -2,6 +2,7 @@ using Features.Constants;
 using Features.GameStates.States.Interfaces;
 using Features.SceneLoading.Scripts;
 using Features.Services.LevelScore;
+using Features.Services.Network;
 using Features.Services.UI.Factory;
 using Features.Services.UI.Windows;
 
@@ -13,62 +14,54 @@ namespace Features.GameStates.States
     private readonly ISceneLoader sceneLoader;
     private readonly ILevelScoreService levelScoreService;
     private readonly IWindowsService windowsService;
+    private readonly INetwork network;
 
-    public GameLoadState(GameStateMachine gameStateMachine, ISceneLoader sceneLoader, ILevelScoreService levelScoreService, IWindowsService windowsService)
+    public GameLoadState(GameStateMachine gameStateMachine, ISceneLoader sceneLoader, ILevelScoreService levelScoreService, IWindowsService windowsService, INetwork network)
     {
       this.gameStateMachine = gameStateMachine;
       this.sceneLoader = sceneLoader;
       this.levelScoreService = levelScoreService;
       this.windowsService = windowsService;
+      this.network = network;
     }
 
     public void Enter()
     {
-      levelScoreService.ResetScore();
-      sceneLoader.Load(GameConstants.GameSceneName, OnLoad);
+      
     }
 
     public void Exit()
     {
       
+    }
+
+    public void LoadAsHost() => 
+      sceneLoader.Load(GameConstants.GameSceneName, OnLoad, StartHost);
+
+    public void LoadAsClient(string lobbyId)
+    {
+      network.SetLobbyID(lobbyId);
+      sceneLoader.Load(GameConstants.GameSceneName, OnLoad, JoinLobby);
     }
 
     private void OnLoad()
     {
       CreateHUD();
-      levelScoreService.RegisterPlayer("Player");
       gameStateMachine.Enter<GameLoopState>();
+    }
+
+    private void StartHost()
+    {
+      network.CreateHost();
+    }
+
+    private void JoinLobby()
+    {
+      network.JoinLobby();
     }
 
     private void CreateHUD() => 
       windowsService.Open(WindowId.LevelMenu);
     
-  }
-  
-  public class MainMenuState : IState
-  {
-    private readonly ISceneLoader sceneLoader;
-    private readonly IWindowsService windowsService;
-
-    public MainMenuState(ISceneLoader sceneLoader, IWindowsService windowsService)
-    {
-      this.sceneLoader = sceneLoader;
-      this.windowsService = windowsService;
-    }
-    
-    public void Enter()
-    {
-      sceneLoader.Load(GameConstants.MainMenuScene, OnLoaded);
-    }
-
-    public void Exit()
-    {
-      
-    }
-
-    private void OnLoaded()
-    {
-      windowsService.Open(WindowId.MainMenu);  
-    }
   }
 }

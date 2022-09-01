@@ -64,8 +64,11 @@ namespace Features.GameStates.States
       services.RegisterSingle(dataService);
     }
 
-    private void RegisterLevelScoreService() => 
+    private void RegisterLevelScoreService()
+    {
+      //ILevelScoreService levelScoreService = services.Single<IAssetProvider>().Instantiate(services.Single<IStaticDataService>().ScorePrefab());
       services.RegisterSingle(new LevelScoreService());
+    }
 
     private void RegisterUIFactory()
     {
@@ -97,7 +100,8 @@ namespace Features.GameStates.States
       network.Construct(
         services.Single<IHeroFactory>(), 
         services.Single<ILevelScoreService>(),
-        services.Single<IStaticDataService>()
+        services.Single<IStaticDataService>(),
+        services.Single<IAssetProvider>()
         );
       
       services.RegisterSingle(network);

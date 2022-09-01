@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Features.Constants;
 using Features.Player.Scripts.Base;
+using Features.Services.LevelScore;
 using Features.Services.Network;
 using Features.Services.UI.Factory;
 using Features.StaticData.HeroData.Models;
@@ -18,6 +19,7 @@ namespace Features.Services.StaticData
     private Dictionary<WindowId, WindowInstantiateData> windows;
 
     private CustomNetworkManager networkManager;
+    private LevelScoreService scoreService;
 
     private HeroModelsStaticData modelsData;
     
@@ -30,6 +32,7 @@ namespace Features.Services.StaticData
 
       networkManager = Resources.Load<CustomNetworkManager>(GameConstants.NetworkManagerPath);
       modelsData = Resources.Load<HeroModelsStaticData>(GameConstants.HeroModelsPath);
+      //scoreService = Resources.Load<LevelScoreService>(GameConstants.ScoreServicePath);
       Resources.UnloadUnusedAssets();
     }
     
@@ -40,6 +43,9 @@ namespace Features.Services.StaticData
 
     public CustomNetworkManager NetworkManagerPrefab() => 
       networkManager;
+
+    public LevelScoreService ScorePrefab() => 
+      scoreService;
 
     public Hero Model(int modelID) => 
       modelsData.Models[modelID];

@@ -24,12 +24,12 @@ namespace Features.UI.Windows.GameMenu
             levelScoreService.Changed -= DisplayScore;
         }
 
-        private void DisplayScore(Dictionary<string, int> scores)
+        private void DisplayScore(List<PlayerScore> scores)
         {
             scoreDisplay.text = "";
-            foreach (KeyValuePair<string,int> score in scores)
+            for (int i = 0; i < scores.Count; i++)
             {
-                scoreDisplay.text += $"{score.Key} : {score.Value}\n";
+                scoreDisplay.text += $"{scores[i].Nickname} : {scores[i].Score}\n";
             }
         }
     }

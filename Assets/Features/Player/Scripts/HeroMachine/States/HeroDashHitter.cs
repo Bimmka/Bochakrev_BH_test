@@ -10,24 +10,27 @@ namespace Features.Player.Scripts.HeroMachine.States
   {
     private readonly HeroDashHitData hitData;
     private readonly Transform hero;
-    private readonly float heroColliderHeight;
-    private readonly float heroColliderRadius;
+    private readonly CharacterController characterController;
     private readonly Action actionOnHit;
 
     private readonly Collider[] hits;
 
-    public int LastHitCount { get; private set; }
-    public IReadOnlyCollection<Collider> Hits => hits;
+    private readonly float colliderRadius;
+    private readonly float colliderHeight;
 
-    public HeroDashHitter(HeroDashHitData hitData, Transform hero, float heroColliderHeight, float heroColliderRadius,
+    public int LastHitCount { get; private set; }
+
+    public HeroDashHitter(HeroDashHitData hitData, Transform hero, CharacterController characterController,
       Action actionOnHit)
     {
       this.hitData = hitData;
       this.hero = hero;
-      this.heroColliderHeight = heroColliderHeight;
-      this.heroColliderRadius = heroColliderRadius;
+      this.characterController = characterController;
       this.actionOnHit = actionOnHit;
       hits = new Collider[hitData.MaxHitCount];
+
+      colliderRadius = HeroColliderRadius(characterController);
+      colliderHeight = HeroColliderHeight(characterController);
     }
 
     public bool IsHit()
@@ -35,7 +38,7 @@ namespace Features.Player.Scripts.HeroMachine.States
       LastHitCount = Physics.OverlapCapsuleNonAlloc(
         HeroColliderDown(), 
         HeroColliderUp(), 
-        heroColliderRadius, 
+        colliderRadius, 
         hits, 
         hitData.HitLayer);
 
@@ -47,7 +50,7 @@ namespace Features.Player.Scripts.HeroMachine.States
       HeroDamageHandler damageHandler;
       for (int i = 0; i < LastHitCount; i++)
       {
-        if (hits[i].TryGetComponent(out damageHandler) && damageHandler.IsDamaged == false)
+        if (hits[i] != characterController && hits[i].TryGetComponent(out damageHandler) && damageHandler.IsDamaged == false)
         {
           damageHandler.Damage();
           actionOnHit?.Invoke();
@@ -56,9 +59,15 @@ namespace Features.Player.Scripts.HeroMachine.States
     }
 
     private Vector3 HeroColliderDown() => 
-      hero.position - Vector3.up * heroColliderHeight / 2;
+      hero.position - Vector3.up * colliderHeight / 2;
 
     private Vector3 HeroColliderUp() => 
-      hero.position + Vector3.up * heroColliderHeight / 2;
+      hero.position + Vector3.up * colliderHeight / 2;
+
+    private float HeroColliderRadius(CharacterController characterController) => 
+      characterController.radius + characterController.radius * hitData.RadiusOffsetCoefficientFromCollider;
+    
+    private float HeroColliderHeight(CharacterController characterController) => 
+      characterController.height + characterController.height * hitData.RadiusOffsetCoefficientFromCollider;
   }
 }

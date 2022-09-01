@@ -21,10 +21,10 @@ namespace Features.Player.Scripts.HeroMachine.States
     private float dashDuration;
     private bool isDashing;
 
-    private HeroDashHitter dashHitter;
+    private readonly HeroDashHitter dashHitter;
 
     public HeroDashState(HeroStateMachineObserver hero, HeroMove move, HeroCameraObserver cameraRotator,
-      SimpleAnimator animator, string parameterName, HeroDashStaticData dashData, float colliderHeight, float colliderRadius, 
+      SimpleAnimator animator, string parameterName, HeroDashStaticData dashData, CharacterController characterController, 
       ILevelScoreService levelScoreService, string heroName) : 
       base(hero, animator, parameterName)
     {
@@ -34,7 +34,7 @@ namespace Features.Player.Scripts.HeroMachine.States
       this.levelScoreService = levelScoreService;
       this.heroName = heroName;
 
-      dashHitter = new HeroDashHitter(dashData.HitData, hero.transform, colliderHeight, colliderRadius, AddScore);
+      dashHitter = new HeroDashHitter(dashData.HitData, hero.transform, characterController, AddScore);
     }
 
     public override void Enter()

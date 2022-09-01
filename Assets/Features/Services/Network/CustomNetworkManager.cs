@@ -1,4 +1,5 @@
 using Features.Player.Scripts.Base;
+using Features.Services.Assets;
 using Features.Services.EntityFactories;
 using Features.Services.LevelScore;
 using Features.Services.StaticData;
@@ -9,12 +10,16 @@ namespace Features.Services.Network
 {
   public class CustomNetworkManager : NetworkManager, INetwork
   {
+    [SerializeField] private ScoreNetwork scorePrefab;
+    
     private IHeroFactory heroFactory;
     private ILevelScoreService levelScoreService;
     private IStaticDataService staticDataService;
+    private IAssetProvider assetProvider;
 
-    public void Construct(IHeroFactory heroFactory, ILevelScoreService levelScoreService, IStaticDataService staticDataService)
+    public void Construct(IHeroFactory heroFactory, ILevelScoreService levelScoreService, IStaticDataService staticDataService, IAssetProvider assetProvider)
     {
+      this.assetProvider = assetProvider;
       this.staticDataService = staticDataService;
       this.levelScoreService = levelScoreService;
       this.heroFactory = heroFactory;
@@ -24,6 +29,20 @@ namespace Features.Services.Network
       {
         NetworkClient.RegisterPrefab(models[i].gameObject, heroFactory.SpawnHandler,  heroFactory.UnspawnHandler);
       }
+      
+      NetworkClient.RegisterPrefab(scorePrefab.gameObject, SpawnScore, UnspawnScore);
+    }
+
+    private GameObject SpawnScore(SpawnMessage msg)
+    {
+      ScoreNetwork score = assetProvider.Instantiate(scorePrefab);
+      score.Construct(levelScoreService);
+      return score.gameObject;
+    }
+
+    private void UnspawnScore(GameObject spawned)
+    {
+      
     }
 
     public void CreateHost() => 
@@ -40,6 +59,16 @@ namespace Features.Services.Network
       base.OnStartServer();
       
       NetworkServer.RegisterHandler<NetworkHeroModel>(CreateCharacter);
+
+      ScoreNetwork scoreNetwork = assetProvider.Instantiate(scorePrefab);
+      scoreNetwork.Construct(levelScoreService);
+      NetworkServer.Spawn(scoreNetwork.gameObject);
+    }
+
+    public override void ServerChangeScene(string newSceneName)
+    {
+      base.ServerChangeScene(newSceneName);
+     
     }
 
     public override void OnClientConnect()
@@ -54,7 +83,7 @@ namespace Features.Services.Network
     {
       Hero spawnedHero = heroFactory.Spawn(message.ModelID, RandomPosition().position);
       NetworkServer.AddPlayerForConnection(conn, spawnedHero.gameObject);
-      
+     
       levelScoreService.RegisterPlayer(spawnedHero.Nickname);
     }
 
