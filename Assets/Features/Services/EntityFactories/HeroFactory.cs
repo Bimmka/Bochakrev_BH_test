@@ -5,6 +5,7 @@ using Features.Services.InputSystem;
 using Features.Services.LevelScore;
 using Features.Services.StaticData;
 using Features.StaticData.HeroData.Models;
+using Mirror;
 using UnityEngine;
 
 namespace Features.Services.EntityFactories
@@ -24,26 +25,18 @@ namespace Features.Services.EntityFactories
       this.inputService = inputService;
     }
 
-    public Hero Spawn(string nickName, Transform startPosition)
+    public Hero Spawn(int messageModelID, Vector3 startPosition)
     {
-      Hero spawnedHero = assetProvider.Instantiate(staticDataService.HeroPrefab(), startPosition);
+      Hero spawnedHero = assetProvider.Instantiate(staticDataService.Model(messageModelID), startPosition);
 
-      HeroModelSpawnMarker modelSpawnMarker = spawnedHero.GetComponentInChildren<HeroModelSpawnMarker>();
-      HeroModel spawnedModel = SpawnModel(modelSpawnMarker.transform);
-      
-      spawnedHero.Construct(levelScoreService, inputService, nickName,spawnedModel);
+      spawnedHero.Construct(levelScoreService, inputService);
       return spawnedHero;
     }
 
-    private HeroModel SpawnModel(Transform transform)
-    {
-      HeroModel model = RandomModel();
-      HeroModel spawnedModel = assetProvider.Instantiate(model, transform);
-      return spawnedModel;
-    }
+    public GameObject SpawnHandler(SpawnMessage msg) => 
+      Spawn(staticDataService.ModelID(msg.assetId), msg.position).gameObject;
 
-    private HeroModel RandomModel() => 
-      staticDataService.RandomModel();
-
+    public void UnspawnHandler(GameObject spawned) => 
+      Object.Destroy(spawned);
   }
 }

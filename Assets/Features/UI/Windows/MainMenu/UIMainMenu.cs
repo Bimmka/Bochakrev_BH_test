@@ -11,7 +11,6 @@ namespace Features.UI.Windows.MainMenu
   public class UIMainMenu : BaseWindow
   {
     [SerializeField] private UIMainMenuView view;
-    [SerializeField] private TMP_InputField nicknameInputField;
     [SerializeField] private TMP_InputField joinLobbyIdInputField;
     [SerializeField] private TMP_InputField hostLobbyIdInputField;
     [SerializeField] private Button joinLobbyButton;
@@ -48,12 +47,6 @@ namespace Features.UI.Windows.MainMenu
     private void TryJoinLobby()
     {
       view.HideTips();
-      
-      if (IsCorrectNickname() == false)
-      {
-        view.DisplayIncorrectNicknameTip();
-        return;
-      }
 
       if (IsCorrectJoinLobbyID() == false)
       {
@@ -66,40 +59,32 @@ namespace Features.UI.Windows.MainMenu
 
     private void JoinLobby()
     {
-      
+      network.SetLobbyID(joinLobbyIdInputField.text);
+      network.JoinLobby();
     }
 
     private void TryHostLobby()
     {
       view.HideTips();
-      
-      if (IsCorrectNickname() == false)
-      {
-        view.DisplayIncorrectNicknameTip();
-        return;
-      }
 
       if (IsCorrectHostLobbyID() == false)
       {
         view.DisplayIncorrectHostLobbyIDTip();
         return;
       }
-
+      
       HostLobby();
+    }
+
+    private void HostLobby()
+    {
+      network.CreateHost();
     }
 
     private bool IsCorrectJoinLobbyID() => 
       string.IsNullOrEmpty(joinLobbyIdInputField.text) == false;
 
-    private bool IsCorrectNickname() => 
-      string.IsNullOrEmpty(nicknameInputField.text) == false;
-
     private bool IsCorrectHostLobbyID() => 
       string.IsNullOrEmpty(hostLobbyIdInputField.text) == false;
-
-    private void HostLobby()
-    {
-      
-    }
   }
 }

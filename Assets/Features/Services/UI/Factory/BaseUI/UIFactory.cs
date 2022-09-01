@@ -28,7 +28,8 @@ namespace Features.Services.UI.Factory.BaseUI
 
     public event Action<WindowId,BaseWindow> Spawned;
     public bool IsCleanedUp { get; private set; }
-    public UIFactory(IGameStateMachine gameStateMachine, IAssetProvider assets, IStaticDataService staticData, ILevelScoreService levelScoreService, INetwork network)
+    public UIFactory(IGameStateMachine gameStateMachine, IAssetProvider assets, IStaticDataService staticData,
+      ILevelScoreService levelScoreService, INetwork network)
     {
       this.gameStateMachine = gameStateMachine;
       this.assets = assets;

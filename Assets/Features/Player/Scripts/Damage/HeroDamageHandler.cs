@@ -7,15 +7,14 @@ namespace Features.Player.Scripts.Damage
   public class HeroDamageHandler : MonoBehaviour
   {
     [SerializeField] private HeroDamageStaticData damageData;
-
-    private Renderer heroRender;
+    [SerializeField] private Renderer modelRenderer;
+    
     private DamageDisplayer displayer;
     public bool IsDamaged { get; private set; }
 
-    public void Construct(Renderer modelRenderer)
+    public void Initialize()
     {
-      heroRender = modelRenderer;
-      displayer = new DamageDisplayer(heroRender, damageData.DamagedColor, damageData.DefaultColor);
+      displayer = new DamageDisplayer(modelRenderer, damageData.DamagedColor, damageData.DefaultColor);
     }
 
     public void Damage()

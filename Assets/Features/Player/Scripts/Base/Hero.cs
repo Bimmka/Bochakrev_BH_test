@@ -23,6 +23,7 @@ namespace Features.Player.Scripts.Base
     [RequireComponent(typeof(HeroDamageHandler))]
     public class Hero : NetworkBehaviour
     {
+        [SerializeField] private string nickname;
         [SerializeField] private HeroInputObserver input;
         [SerializeField] private HeroStateMachineObserver stateMachineObserver;
         [SerializeField] private CharacterController characterController;
@@ -31,34 +32,25 @@ namespace Features.Player.Scripts.Base
         [SerializeField] private HeroRotateStaticData rotateStaticData;
         [SerializeField] private HeroCameraStaticData cameraStaticData;
         [SerializeField] private HeroDashStaticData dashStaticData;
+        [SerializeField] private SimpleAnimator animator;
+        [SerializeField] private Transform cameraTarget;
 
         private HeroCameraObserver cameraRotator;
         private ILevelScoreService levelScoreService;
-        private SimpleAnimator animator;
-        private HeroModel model;
-        
-        private string heroName;
+        public string Nickname => nickname;
 
-        public void Construct(ILevelScoreService levelScoreService, IInputService inputService, string heroName, HeroModel model)
+        public void Construct(ILevelScoreService levelScoreService, IInputService inputService)
         {
-            this.model = model;
-            animator = model.Animator;
-            this.heroName = heroName;
+        
             this.levelScoreService = levelScoreService;
             input.Construct(inputService);
-            damageHandler.Construct(model.MainRenderer);
+            damageHandler.Initialize();
             
-            /* if (IsNotLocalPlayer())
-               return;*/
-
             InitializeStateMachine();
         }
 
         private void OnDestroy()
         {
-            /*if (IsNotLocalPlayer())
-                return;*/
-            
             input.Cleanup();
             stateMachineObserver.Cleanup();
         }
@@ -77,19 +69,19 @@ namespace Features.Player.Scripts.Base
             
             HeroRotate rotate = new HeroRotate(transform, rotateStaticData);
             HeroMove move = new HeroMove(transform, moveStaticData, camera.transform, rotate, characterController);
-            cameraRotator = new HeroCameraObserver(camera.transform, cameraStaticData, model.CameraTarget);
+            cameraRotator = new HeroCameraObserver(camera.transform, cameraStaticData, cameraTarget);
             cameraRotator.InitializeCamera();
             
             HeroStatesContainer container = new HeroStatesContainer(stateMachineObserver, move, cameraRotator, animator, dashStaticData, characterController, 
-                levelScoreService, heroName);
+                levelScoreService, nickname);
             
             stateMachineObserver.Construct(container, animator);
         }
 
         private void Update()
         {
-            /*if (IsNotLocalPlayer())
-                return;*/
+            if (IsNotLocalPlayer())
+                return;
             
             input.ReadInput();
             stateMachineObserver.UpdateState(input.Commands, input.CommandsCount, Time.deltaTime);

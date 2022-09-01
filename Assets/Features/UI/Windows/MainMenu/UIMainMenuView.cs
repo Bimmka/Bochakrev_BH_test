@@ -5,20 +5,13 @@ namespace Features.UI.Windows.MainMenu
 {
   public class UIMainMenuView : MonoBehaviour
   {
-    [SerializeField] private TextMeshProUGUI nicknameErrorTip;
     [SerializeField] private TextMeshProUGUI joinLobbyIdErrorTip;
     [SerializeField] private TextMeshProUGUI hostLobbyIdErrorTip;
 
     public void HideTips()
     {
-      ChangeTextEnableState(nicknameErrorTip, false);
       ChangeTextEnableState(joinLobbyIdErrorTip, false);
       ChangeTextEnableState(hostLobbyIdErrorTip, false);
-    }
-    
-    public void DisplayIncorrectNicknameTip()
-    {
-      ChangeTextEnableState(nicknameErrorTip, true);
     }
 
     public void DisplayIncorrectJoinLobbyIDTip()

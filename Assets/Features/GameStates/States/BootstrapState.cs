@@ -93,7 +93,13 @@ namespace Features.GameStates.States
     private void RegisterNetworkManagerService()
     {
       INetwork network = services.Single<IAssetProvider>().Instantiate(services.Single<IStaticDataService>().NetworkManagerPrefab());
-      network.Construct(services.Single<IHeroFactory>());
+      
+      network.Construct(
+        services.Single<IHeroFactory>(), 
+        services.Single<ILevelScoreService>(),
+        services.Single<IStaticDataService>()
+        );
+      
       services.RegisterSingle(network);
     }
   }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Features.Constants;
 using Features.Player.Scripts.Base;
@@ -6,7 +7,9 @@ using Features.Services.Network;
 using Features.Services.UI.Factory;
 using Features.StaticData.HeroData.Models;
 using Features.StaticData.Windows;
+using Mirror;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Features.Services.StaticData
 {
@@ -38,10 +41,24 @@ namespace Features.Services.StaticData
     public CustomNetworkManager NetworkManagerPrefab() => 
       networkManager;
 
-    public HeroModel RandomModel() => 
-      modelsData.Models[Random.Range(0, modelsData.Models.Length)];
+    public Hero Model(int modelID) => 
+      modelsData.Models[modelID];
 
-    public Hero HeroPrefab() => 
-      modelsData.HeroPrefab;
+    public int ModelID(Guid msgAssetId)
+    {
+      for (int i = 0; i < modelsData.Models.Length; i++)
+      {
+        if (modelsData.Models[i].GetComponent<NetworkIdentity>().assetId == msgAssetId)
+          return i;
+      }
+
+      return -1;
+    }
+
+    public Hero[] Models() => 
+      modelsData.Models;
+
+    public int RandomModelID() => 
+      Random.Range(0, modelsData.Models.Length);
   }
 }
